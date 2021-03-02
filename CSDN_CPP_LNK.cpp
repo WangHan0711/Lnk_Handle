@@ -4,10 +4,9 @@
 
 using namespace std;
 
-
 int CreateLnk(const wchar_t* TARGET, const wchar_t* LNKFILE)
 {
-	if (S_OK != CoInitializeEx(NULL, COINIT_APARTMENTTHREADED | COINIT_DISABLE_OLE1DDE))
+	if (S_OK != CoInitializeEx(NULL, COINIT_APARTMENTTHREADED | COINIT_DISABLE_OLE1DDE))  //初始化COM库失败
 		return 1;
 	IShellLinkW* psl;
 	HRESULT hr = CoCreateInstance(CLSID_ShellLink, NULL, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&psl));
@@ -102,9 +101,9 @@ int main()
     cout << "Hello World!\n";
 
 	wchar_t CurrectPath[MAX_PATH] = { 0 };
-	GetModuleFileNameW(NULL, CurrectPath, MAX_PATH);
+	GetModuleFileNameW(NULL, CurrectPath, MAX_PATH);  //获取当前路径
 	*(wcsrchr(CurrectPath, L'\\') + 1) = L'\0';
-	wcscat_s(CurrectPath, L"test.lnk");
+	wcscat_s(CurrectPath, L"test.lnk");  //拼接出lnk路径
 
 	cout << "生成快捷方式：" << ((0 == CreateLnk(L"C:\\Windows\\system32\\calc.exe", CurrectPath)) ? "成功" : "失败") << endl;
 
